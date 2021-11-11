@@ -21,3 +21,10 @@ When it comes to the communication from the client side and the blockchain there
 ### 5. Metamask
 
 Metamask provides great value as it facilitates not only users by providing them an interface but allows developers to be able to identify the users and interact with the Ethereum API. This toll will come in handy when interacting with the clientside.
+
+
+## How will it work?
+
+Upon the deployment of the project, all of the VVS tokens that are created will be given to the TodoReward contract so it can manage them( keep track of balanace and and sending out the token). The user from the client then will be able to create tasks, keep track of his tasks and be able to mark a task as completed which he will then be rewarded with VVS tokens. 
+
+![Architecture](https://user-images.githubusercontent.com/20049210/141364765-955c35ba-c0a8-4f83-afc9-c460a4ccf54a.png)
