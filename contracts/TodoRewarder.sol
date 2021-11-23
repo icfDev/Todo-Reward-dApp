@@ -21,7 +21,8 @@ contract TodoRewarder {
     mapping( address => Task[]) public userTaskList;
 
     //Setting the task to the blockchain
-    function insertTask (string memory _content, string memory _name) public returns (bool success){
+    function setTask (string memory _content, string memory _name) public returns (bool success){
+        console.log("This is my content",_content, "this is my name",_name);
         if(userTaskIds[msg.sender].length == 0){
             userTaskList[msg.sender].push(Task(0,_name,_content,false));
             userTaskIds[msg.sender].push(0);
@@ -37,6 +38,7 @@ contract TodoRewarder {
     }
 
     function getTaskList (address _userAddress) public view returns(Task[] memory _taskList) {
+        console.log("Get %s",_userAddress, "This is what im getting %s", userTaskList[_userAddress]);
         return userTaskList[_userAddress];
     }
 
