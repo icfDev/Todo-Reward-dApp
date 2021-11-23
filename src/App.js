@@ -44,7 +44,7 @@ function App() {
         provider
       );
       try {
-        const data = await contract.getTaskList;
+        const data = await contract.getTaskList();
         console.log(data, "Hey this is the data i fetched");
       } catch (err) {
         console.log(err, "<- Error");
