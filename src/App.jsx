@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
+import Header from "./Components/Header";
 import TodoRewarder from "./artifacts/contracts/TodoRewarder.sol/TodoRewarder.json";
+import { Button, Form } from "react-bootstrap";
 
 const todoRewarderAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -45,7 +47,8 @@ function App() {
       );
       try {
         const data = await contract.getTaskList();
-        console.log(data, "Hey this is the data i fetched");
+        console.log(data, "This is the data");
+        setFetchedTaskList(data);
       } catch (err) {
         console.log(err, "<- Error");
       }
@@ -53,10 +56,14 @@ function App() {
   }
 
   async function setUserTask() {
-    console.log("Am i being clicked");
+    console.log("SetUserTask i. Clicked");
     if (!task._content || !task._name) return;
     if (typeof window.ethereum) {
-      console.log("Do i go in here?");
+      console.log(
+        "SetUserTask ii. Inside if window ethereum",
+        task._name,
+        task._content
+      );
       await requestAccount();
       //New provider that writes to the blockchain
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,35 +78,64 @@ function App() {
       setTask(initialTaskState);
       await transaction.wait();
       fetchTaskList();
+      console.log(fetchedTaskList, "Fetched task list");
     }
   }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button onClick={fetchTaskList}>Fetch Task List</button>
-        <button onClick={setUserTask}>Set Task</button>
-        <form>
-          <label>
-            Task Name
-            <input
-              type="text"
-              name="_name"
-              value={task._name}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Task Description
-            <input
-              type="text"
-              name="_content"
-              value={task._description}
-              onChange={handleChange}
-            />
-          </label>
-        </form>
-      </header>
+      <Header />
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicTaskName">
+          <Form.Label>Task Name</Form.Label>
+          <Form.Control
+            placeholder="Enter Task Name"
+            type="text"
+            name="_name"
+            value={task._name}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicTaskDescription">
+          <Form.Label>Task Description</Form.Label>
+          <Form.Control
+            placeholder="Enter Task Description"
+            type="text"
+            name="_content"
+            value={task._content}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Form>
+      <Button variant="primary" type="submit" onClick={setUserTask}>
+        Set Task
+      </Button>
+      <Button variant="primary" type="submit" onClick={fetchTaskList}>
+        Fetch Tasks
+      </Button>
+      {console.log(task, "Task Status")}
+      {/* <button onClick={fetchTaskList}>Fetch Task List</button>
+      <button onClick={setUserTask}>Set Task</button>
+      <form>
+        <label>
+          Task Name
+          <input
+            type="text"
+            name="_name"
+            value={task._name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Task Description
+          <input
+            type="text"
+            name="_content"
+            value={task._content}
+            onChange={handleChange}
+          />
+        </label>
+      </form> */}
     </div>
   );
 }
