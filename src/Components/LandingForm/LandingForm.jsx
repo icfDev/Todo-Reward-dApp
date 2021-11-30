@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import "./App.css";
-import Header from "./Components/Header";
-import TodoRewarder from "./artifacts/contracts/TodoRewarder.sol/TodoRewarder.json";
-import { Button, Form } from "react-bootstrap";
+import "./LandingForm.css";
+import TodoRewarder from "../../artifacts/contracts/TodoRewarder.sol/TodoRewarder.json";
+import { Row, Container, Form, Button } from "react-bootstrap";
 
 const todoRewarderAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-function App() {
+function LandingForm() {
   // TaskList that gets fetched
   const [fetchedTaskList, setFetchedTaskList] = useState({});
 
@@ -83,61 +82,49 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Header />
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicTaskName">
-          <Form.Label>Task Name</Form.Label>
-          <Form.Control
-            placeholder="Enter Task Name"
-            type="text"
-            name="_name"
-            value={task._name}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicTaskDescription">
-          <Form.Label>Task Description</Form.Label>
-          <Form.Control
-            placeholder="Enter Task Description"
-            type="text"
-            name="_content"
-            value={task._content}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Form>
-      <Button variant="primary" type="submit" onClick={setUserTask}>
-        Set Task
-      </Button>
-      <Button variant="primary" type="submit" onClick={fetchTaskList}>
-        Fetch Tasks
-      </Button>
-      {console.log(task, "Task Status")}
-      {/* <button onClick={fetchTaskList}>Fetch Task List</button>
-      <button onClick={setUserTask}>Set Task</button>
-      <form>
-        <label>
-          Task Name
-          <input
-            type="text"
-            name="_name"
-            value={task._name}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Task Description
-          <input
-            type="text"
-            name="_content"
-            value={task._content}
-            onChange={handleChange}
-          />
-        </label>
-      </form> */}
+    <div className="LandingForm">
+      <Container id="form-container">
+        <Row className="form-container__row justify-content-center" lg={3}>
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicTaskName">
+              <Form.Label>Task Name</Form.Label>
+              <Form.Control
+                placeholder="Enter Task Name"
+                type="text"
+                name="_name"
+                value={task._name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicTaskDescription">
+              <Form.Label>Task Description</Form.Label>
+              <Form.Control
+                placeholder="Enter Task Description"
+                type="text"
+                name="_content"
+                value={task._content}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Form>
+        </Row>
+        <div className="form-container__buttons">
+          <Button
+            className="form-container__button"
+            variant="primary"
+            type="submit"
+            onClick={setUserTask}
+          >
+            Set Task
+          </Button>
+          <Button variant="primary" type="submit" onClick={fetchTaskList}>
+            Fetch Tasks
+          </Button>
+          {console.log(task, "Task Status")}
+        </div>
+      </Container>
     </div>
   );
 }
 
-export default App;
+export default LandingForm;
