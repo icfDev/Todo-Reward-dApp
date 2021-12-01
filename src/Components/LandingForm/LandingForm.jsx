@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./LandingForm.css";
 import TodoRewarder from "../../artifacts/contracts/TodoRewarder.sol/TodoRewarder.json";
-import { Row, Container, Form, Button } from "react-bootstrap";
+import LandingFormInput from "./LandingFormInput/LandingFormInput";
+import TaskListDisplay from "./TaskListDisplay/TaskListDisplay";
 
 const todoRewarderAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 function LandingForm() {
-  // TaskList that gets fetched
-  const [fetchedTaskList, setFetchedTaskList] = useState({});
-
   //Task Initial Object
   const initialTaskState = {
     id: "",
@@ -17,6 +15,9 @@ function LandingForm() {
     _content: "",
     completed: false,
   };
+  // TaskList that gets fetched
+  const [fetchedTaskList, setFetchedTaskList] = useState([]);
+
   //Task State variable
   const [task, setTask] = useState(initialTaskState);
 
@@ -35,6 +36,7 @@ function LandingForm() {
   }
 
   async function fetchTaskList() {
+    console.log("am i being clicked");
     if (typeof window.ethereum !== "undefined") {
       // Provider allows a connection to the ethereum network and provides a read only access to the blockchain and its status.
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -83,46 +85,18 @@ function LandingForm() {
 
   return (
     <div className="LandingForm">
-      <Container id="form-container">
-        <Row className="form-container__row justify-content-center" lg={3}>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicTaskName">
-              <Form.Label>Task Name</Form.Label>
-              <Form.Control
-                placeholder="Enter Task Name"
-                type="text"
-                name="_name"
-                value={task._name}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicTaskDescription">
-              <Form.Label>Task Description</Form.Label>
-              <Form.Control
-                placeholder="Enter Task Description"
-                type="text"
-                name="_content"
-                value={task._content}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form>
-        </Row>
-        <div className="form-container__buttons">
-          <Button
-            className="form-container__button"
-            variant="primary"
-            type="submit"
-            onClick={setUserTask}
-          >
-            Set Task
-          </Button>
-          <Button variant="primary" type="submit" onClick={fetchTaskList}>
-            Fetch Tasks
-          </Button>
-          {console.log(task, "Task Status")}
-        </div>
-      </Container>
+      <LandingFormInput
+        handleChange={handleChange}
+        setUserTask={setUserTask}
+        fetchTaskList={fetchTaskList}
+        _name={task._name}
+        _content={task._content}
+      />
+      {fetchedTaskList
+        ? fetchedTaskList.map((fetchedTask) => (
+            <TaskListDisplay fetchedTask={fetchedTask} />
+          ))
+        : ""}
     </div>
   );
 }
