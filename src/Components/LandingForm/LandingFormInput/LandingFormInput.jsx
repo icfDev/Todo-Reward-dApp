@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Container, Form, Button } from "react-bootstrap";
+import "./LandingFormInput.css";
 
 const LandingFormInput = ({
   handleChange,
@@ -10,7 +11,7 @@ const LandingFormInput = ({
 }) => {
   return (
     <div>
-      <Container id="form-container">
+      <Container id="LandingFormInput">
         <Row className="form-container__row justify-content-center" lg={3}>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicTaskName">

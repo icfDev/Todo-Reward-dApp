@@ -1,4 +1,14 @@
-.box__container {
+#task__list-display {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.task__list-row {
   width: 650px;
   height: 150px;
+  margin: 24px 0;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  padding: 8px;
 }
